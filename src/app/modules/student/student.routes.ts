@@ -1,25 +1,14 @@
-import express from "express";
-import auth from "../../middlewares/auth";
-import { USER_ROLE } from "../user/user.constant";
-import validateRequest from "../../middlewares/validateRequest";
-import studentValidations from "./student.validation";
-import studentController from "./student.controller";
-import { uploadFile } from "../../helper/fileUploader";
+import express from 'express';
+import auth from '../../middlewares/auth';
+import { USER_ROLE } from '../user/user.const';
+import StudentController from './student.controller';
 
 const router = express.Router();
 
-router.patch(
-    "/update-profile",
-    auth(USER_ROLE.user),
-    uploadFile(),
-    (req, res, next) => {
-        if (req.body.data) {
-            req.body = JSON.parse(req.body.data);
-        }
-        next();
-    },
-    validateRequest(studentValidations.updateStudentData),
-    studentController.updateUserProfile
+router.get(
+  '/',
+  auth(USER_ROLE.ADMIN, USER_ROLE.STUDENT),
+  StudentController.getAllStudents,
 );
 
 export const studentRoutes = router;

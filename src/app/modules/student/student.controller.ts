@@ -1,24 +1,17 @@
-import httpStatus from "http-status";
-import catchAsync from "../../utilities/catchasync";
-import sendResponse from "../../utilities/sendResponse";
-import studentServices from "./student.service";
+import catchAsync from '../../utils/catchAsync';
+import httpStatus from '../../utils/httpStatus';
+import sendResponse from '../../utils/sendResponse';
+import studentServices from './student.service';
 
-const updateUserProfile = catchAsync(async (req, res) => {
-    const { files } = req;
-    if (files && typeof files === "object" && "profile_image" in files) {
-        req.body.profile_image = files["profile_image"][0].path;
-    }
-    const result = await studentServices.updateUserProfile(
-        req.user.profileId,
-        req.body
-    );
-    sendResponse(res, {
-        statusCode: httpStatus.OK,
-        success: true,
-        message: "Profile updated successfully",
-        data: result,
-    });
+const getAllStudents = catchAsync(async (req, res) => {
+  const result = await studentServices.getAllStudentsFromDB();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Students fetched successfully',
+    data: result,
+  });
 });
 
-const StudentController = { updateUserProfile };
+const StudentController = { getAllStudents };
 export default StudentController;
