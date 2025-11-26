@@ -6,7 +6,8 @@ export type TUser = {
   name: string;
   email: string;
   password: string;
-  profileId: string;
+  // profileId will be set after the role-specific profile document is created
+  profileId?: string;
   role: TUserRole;
   isBlocked: boolean;
   passwordChangedAt?: Date;

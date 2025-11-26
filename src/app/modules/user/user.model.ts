@@ -9,7 +9,9 @@ const userSchema = new Schema<TUser>(
     name: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    profileId: { type: String, required: true },
+    // profileId will be populated after a role-specific profile (Teacher/Student) is created
+    // keep it optional to allow creating a User first, then creating/updating profile inside a transaction
+    profileId: { type: String },
     role: {
       type: String,
       enum: USER_ROLE,

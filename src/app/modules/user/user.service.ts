@@ -5,6 +5,7 @@ import { User } from './user.model';
 import mongoose from 'mongoose';
 import { USER_ROLE } from './user.const';
 import Teacher from '../teacher/teacher.model';
+import Student from '../student/student.model';
 
 const createUserIntoDB = async (userData: TUser) => {
   const existingUser = await User.isUserExists(userData.email);
@@ -32,6 +33,18 @@ const createUserIntoDB = async (userData: TUser) => {
       const [teacher] = await Teacher.create([teacherPayload], { session });
       profile = teacher;
 
+      await User.findByIdAndUpdate(
+        user._id,
+        { profileId: profile._id },
+        { session },
+      );
+    } else if (userData.role === USER_ROLE.STUDENT) {
+      const studentPayload = {
+        ...userData,
+        user: user._id,
+      };
+      const [student] = await Student.create([studentPayload], { session });
+      profile = student;
       await User.findByIdAndUpdate(
         user._id,
         { profileId: profile._id },
