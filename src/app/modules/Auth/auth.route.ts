@@ -15,7 +15,7 @@ router.post(
 router.post('/refresh-token', AuthControllers.refreshToken);
 router.post(
   '/change-password',
-  auth(USER_ROLE.admin, USER_ROLE.user),
+  auth(USER_ROLE.ADMIN, USER_ROLE.TEACHER),
   validateRequest(AuthValidation.passwordChangeValidationSchema),
   AuthControllers.changePassword,
 );
@@ -25,13 +25,21 @@ router.post(
 
   AuthControllers.forgotPassword,
 );
-router.post('/verify-otp',validateRequest(AuthValidation.verifyOTPValidationSchema),AuthControllers.verifyOTP)
+router.post(
+  '/verify-otp',
+  validateRequest(AuthValidation.verifyOTPValidationSchema),
+  AuthControllers.verifyOTP,
+);
 router.post(
   '/reset-password',
   validateRequest(AuthValidation.resetPasswordValidationSchema),
   AuthControllers.resetPassword,
 );
 
-router.get('/me', auth(USER_ROLE.admin, USER_ROLE.user), AuthControllers.getMe);
+router.get(
+  '/me',
+  auth(USER_ROLE.ADMIN, USER_ROLE.TEACHER),
+  AuthControllers.getMe,
+);
 
 export const AuthRoutes = router;

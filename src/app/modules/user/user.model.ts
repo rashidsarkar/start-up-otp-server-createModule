@@ -2,16 +2,17 @@ import { model, Schema } from 'mongoose';
 import { TUser, UserModel } from './user.interface';
 import config from '../../config';
 import bcrypt from 'bcrypt';
+import { USER_ROLE } from './user.const';
 
 const userSchema = new Schema<TUser>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
+    profileId: { type: String, required: true },
     role: {
       type: String,
-      enum: ['admin', 'user'],
-      default: 'user',
+      enum: USER_ROLE,
     },
     isBlocked: {
       type: Boolean,
@@ -20,7 +21,7 @@ const userSchema = new Schema<TUser>(
     passwordChangedAt: { type: Date, default: Date.now },
     resetOTP: { type: String },
     resetOTPExpire: { type: Date },
-    isResetOTPVerified:{type:Boolean,default:false}
+    isResetOTPVerified: { type: Boolean, default: false },
   },
   {
     timestamps: true,

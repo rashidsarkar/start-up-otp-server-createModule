@@ -27,6 +27,8 @@ const loginUser = async (userData: TLoginUser) => {
   }
 
   const jwtPayload = {
+    id: existingUser._id,
+    profileId: existingUser.profileId,
     email: existingUser.email,
     role: existingUser.role,
   };
@@ -146,7 +148,7 @@ const forgotPassword = async (email: string) => {
   const userData = await User.findOne({
     email: email,
   });
-  console.log(userData)
+  console.log(userData);
   if (!userData) {
     throw new AppError(StatusCodes.NOT_FOUND, 'User not found');
   }
@@ -161,9 +163,8 @@ const forgotPassword = async (email: string) => {
       resetOTPExpire: expireTime,
       isResetOTPVerified: false,
     },
-    { new: true, runValidators: true }
+    { new: true, runValidators: true },
   );
-
 
   await emailSender(
     email,
@@ -178,7 +179,7 @@ const forgotPassword = async (email: string) => {
 
 const verifyOTP = async (email: string, otp: string) => {
   const userData = await User.findOne({ email: email });
-  console.log(userData)
+  console.log(userData);
   if (!userData || !userData.resetOTP || !userData.resetOTPExpire) {
     throw new AppError(StatusCodes.BAD_REQUEST, 'Invalid OTP request');
   }
@@ -189,39 +190,40 @@ const verifyOTP = async (email: string, otp: string) => {
     throw new AppError(StatusCodes.BAD_REQUEST, 'OTP expired');
   }
 
-  await User.findOneAndUpdate({email},{
-    isResetOTPVerified:true
-  })
-
+  await User.findOneAndUpdate(
+    { email },
+    {
+      isResetOTPVerified: true,
+    },
+  );
 
   return { message: 'OTP verified successfully' };
 };
 const resetPassword = async (email: string, password: string) => {
-  console.log(password, email)
-  const userData = await User.findOne({ email: email })
+  console.log(password, email);
+  const userData = await User.findOne({ email: email });
   if (!userData) {
     throw new AppError(StatusCodes.NOT_FOUND, 'User not found');
   }
   if (!userData.isResetOTPVerified) {
-    throw new AppError(StatusCodes.BAD_REQUEST, 'OTP not verified')
+    throw new AppError(StatusCodes.BAD_REQUEST, 'OTP not verified');
   }
-
 
   const newHashedPassword = await bcrypt.hash(
     password,
     Number(config.bcrypt_salt),
   );
 
-
-  await User.findOneAndUpdate({email},{
-    password:newHashedPassword,
-    passwordChangedAt:new Date(),
-    isResetOTPVerified:false,
-    resetOTP:undefined,
-    resetOTPExpire:undefined
-  })
-
- 
+  await User.findOneAndUpdate(
+    { email },
+    {
+      password: newHashedPassword,
+      passwordChangedAt: new Date(),
+      isResetOTPVerified: false,
+      resetOTP: undefined,
+      resetOTPExpire: undefined,
+    },
+  );
 
   const jwtPayload = {
     email: userData.email,
@@ -241,12 +243,7 @@ const resetPassword = async (email: string, password: string) => {
   );
 
   return { accessToken, refreshToken };
-
-
-
-
-}
-
+};
 
 export const AuthServices = {
   loginUser,

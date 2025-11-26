@@ -6,12 +6,13 @@ export type TUser = {
   name: string;
   email: string;
   password: string;
+  profileId: string;
   role: TUserRole;
   isBlocked: boolean;
   passwordChangedAt?: Date;
   resetOTP?: string;
   resetOTPExpire?: Date;
-  isResetOTPVerified?:boolean;
+  isResetOTPVerified?: boolean;
 };
 export type TLoginUser = {
   email: string;
