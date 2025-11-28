@@ -1,25 +1,15 @@
-import express from "express";
-import auth from "../../middlewares/auth";
-import { USER_ROLE } from "../user/user.constant";
-import validateRequest from "../../middlewares/validateRequest";
-import friendValidations from "./friend.validation";
-import friendController from "./friend.controller";
-import { uploadFile } from "../../helper/fileUploader";
+import express from 'express';
+import auth from '../../middlewares/auth';
+
+import friendController from './friend.controller';
+import { USER_ROLE } from '../user/user.const';
 
 const router = express.Router();
 
-router.patch(
-    "/update-profile",
-    auth(USER_ROLE.user),
-    uploadFile(),
-    (req, res, next) => {
-        if (req.body.data) {
-            req.body = JSON.parse(req.body.data);
-        }
-        next();
-    },
-    validateRequest(friendValidations.updateFriendData),
-    friendController.updateUserProfile
+router.post(
+  '/send',
+  auth(USER_ROLE.STUDENT, USER_ROLE.TEACHER),
+  friendController.sendFriendRequest,
 );
 
 export const friendRoutes = router;
