@@ -5,6 +5,7 @@ import { AdminRoutes } from '../modules/admin/admin.route';
 import { AuthRoutes } from '../modules/Auth/auth.route';
 import { studentRoutes } from '../modules/student/student.routes';
 import { teacherRoutes } from '../modules/teacher/teacher.routes';
+import { friendRoutes } from '../modules/friend/friend.routes';
 
 const router = Router();
 
@@ -28,6 +29,10 @@ const moduleRoutes = [
   {
     path: '/teacher',
     route: teacherRoutes,
+  },
+  {
+    path: '/friend',
+    route: friendRoutes,
   },
 ];
 

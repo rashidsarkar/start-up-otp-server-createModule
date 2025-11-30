@@ -1,3 +1,6 @@
+import catchAsync from '../../utils/catchAsync';
+import httpStatus from '../../utils/httpStatus';
+import sendResponse from '../../utils/sendResponse';
 import friendServices from './friend.service';
 
 // const updateUserProfile = catchAsync(async (req, res) => {
@@ -17,7 +20,17 @@ import friendServices from './friend.service';
 //     });
 // });
 const sendFriendRequest = catchAsync(async (req, res) => {
-  const result = await friendServices.sendFriendRequest(req.user.profileId);
+  const result = await friendServices.sendFriendRequest(
+    req.tokenUser.profileId,
+    req.tokenUser.role,
+    req.body.receiverId,
+  );
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Profile updated successfully',
+    data: result,
+  });
 });
 const FriendController = { sendFriendRequest };
 export default FriendController;

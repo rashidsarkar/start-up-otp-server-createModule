@@ -1,12 +1,10 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-export const updateFriendData = z.object({
-    body: z.object({
-        name: z.string().optional(),
-        phone: z.string().optional(),
-        address: z.string().optional(),
-    }),
+export const sendFriendRequest = z.object({
+  body: z.object({
+    receiverId: z.string({ required_error: 'receiverId is required' }).min(1),
+  }),
 });
 
-const FriendValidations = { updateFriendData };
+const FriendValidations = { sendFriendRequest };
 export default FriendValidations;
