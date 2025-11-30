@@ -1,21 +1,10 @@
-import httpStatus from "http-status";
-import AppError from "../../error/appError";
-import { IFriendRequest } from "./friendRequest.interface";
-import FriendRequest from "./friendRequest.model";
+import FriendRequest from './friendRequest.model';
 
-const updateUserProfile = async (id: string, payload: Partial<IFriendRequest>) => {
-    if (payload.email || payload.username) {
-        throw new AppError(httpStatus.BAD_REQUEST, "You cannot change the email or username");
-    }
-    const user = await FriendRequest.findById(id);
-    if (!user) {
-        throw new AppError(httpStatus.NOT_FOUND, "Profile not found");
-    }
-    return await FriendRequest.findByIdAndUpdate(id, payload, {
-        new: true,
-        runValidators: true,
-    });
+const getAllFriendRequests = async () => {
+  const result = await FriendRequest.find();
+  return result;
 };
+//acpt or rejeject friend request recever ..also validate its salfe a receser
 
-const FriendRequestServices = { updateUserProfile };
+const FriendRequestServices = { getAllFriendRequests };
 export default FriendRequestServices;
