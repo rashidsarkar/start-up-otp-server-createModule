@@ -17,10 +17,6 @@ const findUserById = async (id: string) => {
   return null;
 };
 
-const getUserModel = (role: 'STUDENT' | 'TEACHER') => {
-  return role === 'STUDENT' ? Student : Teacher;
-};
-
 const sendFriendRequest = async (
   senderId: string,
   senderRoleFromToken: 'STUDENT' | 'TEACHER',
