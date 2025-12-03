@@ -32,5 +32,20 @@ const sendFriendRequest = catchAsync(async (req, res) => {
     data: result,
   });
 });
-const FriendController = { sendFriendRequest };
+
+const handleFriendRequest = catchAsync(async (req, res) => {
+  const result = await friendServices.handleFriendRequest(
+    req.body.requestId,
+    req.tokenUser.profileId,
+    req.body.action,
+  );
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Friend request handled successfully',
+    data: result,
+  });
+});
+
+const FriendController = { sendFriendRequest, handleFriendRequest };
 export default FriendController;

@@ -15,4 +15,11 @@ router.post(
   friendController.sendFriendRequest,
 );
 
+router.post(
+  '/handle-request',
+  auth(USER_ROLE.STUDENT, USER_ROLE.TEACHER),
+  validateRequest(FriendValidations.handleRequestValidationSchema),
+  friendController.handleFriendRequest,
+);
+
 export const friendRoutes = router;

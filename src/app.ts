@@ -2,7 +2,7 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import router from './app/routes';
-
+// import { Server } from 'socket.io';
 import notFound from './app/middlewares/notFound';
 import globalErrorHandler from './app/middlewares/globalErrorhandler';
 
@@ -10,6 +10,7 @@ const app: Application = express();
 
 // parsers
 app.use(express.json());
+// const io = new Server(server);
 app.use(cors());
 app.use(cookieParser());
 
