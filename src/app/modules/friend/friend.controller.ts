@@ -47,5 +47,22 @@ const handleFriendRequest = catchAsync(async (req, res) => {
   });
 });
 
-const FriendController = { sendFriendRequest, handleFriendRequest };
+const checkFriend = catchAsync(async (req, res) => {
+  const result = await friendServices.checkFriend(
+    req.tokenUser.profileId,
+    req.body.friendId,
+  );
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'you are friends',
+    data: result,
+  });
+});
+
+const FriendController = {
+  sendFriendRequest,
+  handleFriendRequest,
+  checkFriend,
+};
 export default FriendController;

@@ -21,5 +21,10 @@ router.post(
   validateRequest(FriendValidations.handleRequestValidationSchema),
   friendController.handleFriendRequest,
 );
-
+router.get(
+  '/check-friend',
+  auth(USER_ROLE.STUDENT, USER_ROLE.TEACHER),
+  validateRequest(FriendValidations.checkFriendValidationSchema),
+  friendController.checkFriend,
+);
 export const friendRoutes = router;

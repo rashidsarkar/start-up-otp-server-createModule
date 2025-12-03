@@ -11,5 +11,14 @@ const handleRequestValidationSchema = z.object({
     action: z.enum(['accept', 'reject']),
   }),
 });
-const FriendValidations = { sendFriendRequest, handleRequestValidationSchema };
+const checkFriendValidationSchema = z.object({
+  body: z.object({
+    friendId: z.string({ required_error: 'friendId is required' }).min(1),
+  }),
+});
+const FriendValidations = {
+  sendFriendRequest,
+  handleRequestValidationSchema,
+  checkFriendValidationSchema,
+};
 export default FriendValidations;

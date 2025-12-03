@@ -138,5 +138,25 @@ const handleFriendRequest = async (
   }
 };
 
-const FriendServices = { sendFriendRequest, handleFriendRequest };
+const checkFriend = async (profileId: string, friendId: string) => {
+  const alreadyFriend = await Friend.findOne({
+    $or: [
+      {
+        user: profileId,
+        friend: friendId,
+      },
+      {
+        user: friendId,
+        friend: profileId,
+      },
+    ],
+  });
+
+  if (!alreadyFriend) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'you are not friends');
+  }
+  return alreadyFriend;
+};
+
+const FriendServices = { sendFriendRequest, handleFriendRequest, checkFriend };
 export default FriendServices;
