@@ -151,11 +151,10 @@ const checkFriend = async (profileId: string, friendId: string) => {
       },
     ],
   });
-
-  if (!alreadyFriend) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'you are not friends');
-  }
-  return alreadyFriend;
+  return {
+    areFriend: !!alreadyFriend,
+    friendData: alreadyFriend || undefined,
+  };
 };
 
 const FriendServices = { sendFriendRequest, handleFriendRequest, checkFriend };
