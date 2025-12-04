@@ -1,6 +1,7 @@
 # Friend Request — Full Setup (TypeScript + Node + Mongoose + Socket.IO)
 
 এই ডকিউমেন্টে আমি সম্পূর্ণ কোড দিলাম — Models, Services, Controllers, Routes, Zod validation, এবং Socket.IO integration। আপনি Student এবং Teacher আলাদা মডেল ব্যবহার করছেন বলে আমি উভয়কে সাপোর্ট করে করেছি (refPath ব্যবহার করে)।
+https://chatgpt.com/share/69312df4-c0c4-8006-8587-6eecd62189a7
 
 ---
 
