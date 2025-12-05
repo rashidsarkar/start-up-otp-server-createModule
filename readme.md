@@ -5,7 +5,7 @@ https://chatgpt.com/share/69312df4-c0c4-8006-8587-6eecd62189a7
 
 ---
 
-## 0. package.json (dependencies)
+## 0. package.json (dependencies) .
 
 ```json
 {
