@@ -226,6 +226,8 @@ const resetPassword = async (email: string, password: string) => {
   );
 
   const jwtPayload = {
+    id: userData._id,
+    profileId: userData.profileId,
     email: userData.email,
     role: userData.role,
   };
